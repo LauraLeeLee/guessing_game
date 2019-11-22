@@ -12,6 +12,30 @@
         Name: <input id="name-input"  class="input name-input" type="text" name="name">
         <input id="submit-input" class="input submit-input" type="submit" value="Submit">
     </div>
+
+    <div class="choose-game" id="choose-game">
+      <h2 id="hello-name" class="hello-name">Welcome to Guessing Game </h2>
+      <button id="guess-btn" class="guess-btn button">Guessing Game</button>
+      <button id="revese-btn" class="reverse-btn button">Reverse Guessing Game</button>
+      <button id="exit-btn" class="exit-btn button">Exit</button>      
+    </div>
+
+    <!-- normal game html -->
+    <div id="normal-game" class="normal-game">
+      <h2 class="game-title">Guessing Game- Normal Version</h2>
+      <div id="input-div1" class="input-div1">
+       Min Number: <input id="min-input" class="min-input range-input input game-input" type="number" min="0">
+      </div>
+      <div id="input-div2" class="input-div">
+        Max Number: <input id="max-input" class="max-input range-input input game-input" type="number">
+      </div>
+      <div id="input-div23" class="input-div">
+          Your Guess: <input id="user-guess" class="user-guess range-input input game-input" type="number">
+         </div>
+      <div id="reponse-div" class="response-div">
+        <p id="guess-response" class="guess-response"></p>
+      </div>
+    </div>
 <script src="js/app.js"></script>
 </body>
 </html>
