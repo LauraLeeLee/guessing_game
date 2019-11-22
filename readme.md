@@ -2,7 +2,7 @@
 - This game was created to demonstrate - skills obtained with HTML, CSS, JavaScript.
 Demonstrates logic needed for game to make decisions.
 
-[Play game live here](https://www.guessing-game-lls.netlify.com)
+[Play game live here](https://guessing-game-lls.netlify.com/)
 
 ### How to play
 - Enter name
