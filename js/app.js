@@ -1,5 +1,5 @@
 let chooseGameDiv = document.getElementById('choose-game');
-let guessGameBtn = document.getElementById('guess-btn');
+let normalGameBtn = document.getElementById('normal-guess-btn');
 let reverseGameBtn = document.getElementById('reverse-btn');
 let exitBtn = document.getElementById('exit-btn');
 
@@ -8,13 +8,13 @@ let helloName = document.getElementById('hello-name');
 let normalGameDiv = document.getElementById('normal-game');
 
 let minRangeInput = document.getElementById('min-input');
-let minValue = minRangeInput.value;
+let minValue;
 
 let maxRangeInput = document.getElementById('max-input');
-let maxValue = maxRangeInput.value;
+let maxValue;
 
 let userGuess = document.getElementById('user-guess');
-let guessValue = userGuess.value;
+let guessValue;
 
 let guessResponseDiv = document.createElement('response-div');
 let guessResponse = document.getElementById('guess-response');
@@ -36,8 +36,8 @@ let guessResponse = document.getElementById('guess-response');
 			});
 		}
 		
-		if(guessGameBtn) {   
-			guessGameBtn.addEventListener('click', function() {
+		if(normalGameBtn) {   
+			normalGameBtn.addEventListener('click', function() {
 				console.log('guess game button clicked');
 				normalGameDiv.style.display = 'block';
 				chooseGameDiv.style.display = 'none';
@@ -46,18 +46,21 @@ let guessResponse = document.getElementById('guess-response');
 					minRangeInput.value;
 					console.log(minRangeInput.value);
 				});
-				
+		
 				let maxValue = maxRangeInput.addEventListener('input', function() {
 					maxRangeInput.value;
 					console.log(maxRangeInput.value);
 				});
-
+		
 				let guessValue = userGuess.addEventListener('input', function() {
 					 userGuess.value;
 					console.log(userGuess.value);
 				});
 
+		
+
 				if(guessValue && minValue) {
+					console.log("guessValue minVlaue present?");
 					if(guessValue < minValue) {
 						guessResponse.innerHTML = "please make guess between " + 
 										minValue + " and " + maxValue;
