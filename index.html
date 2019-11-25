@@ -17,13 +17,12 @@
       <h2 id="hello-name" class="hello-name">Welcome to Guessing Game </h2>
       <button id="normal-guess-btn" class="normal-guess-btn button">Guessing Game</button>
       <button id="revese-btn" class="reverse-btn button">Reverse Guessing Game</button>
-      <button id="exit-btn" class="exit-btn button">Exit</button>      
     </div>
 
     <!-- normal game html -->
     <div id="normal-game" class="normal-game">
       <h2 class="game-title">Guessing Game- Normal Version</h2>
-        <div id="min-max-div" class="min-max-div">
+      <div id="min-max-div" class="min-max-div">
        <div id="input-div1" class="input-div1">
         Min Number: <input id="min-input" class="min-input range-input input game-input" type="number" min="0">
         </div>
@@ -31,13 +30,15 @@
           Max Number: <input id="max-input" class="max-input range-input input game-input" type="number">
         </div>
       </div>
-      <div id="input-div23" class="input-div">
+      <div id="input-div3" class="input-div">
           Your Guess: <input id="user-guess" class="user-guess range-input input game-input" type="number">
-         </div>
-         <button id="gen-random" class="gen-random button">Begin!</button>
-      <div id="reponse-div" class="response-div">
-        <p id="guess-response" class="guess-response">Guess Response: </p>
       </div>
+         <button id="gen-random" class="gen-random button">Begin!</button>
+      <div id="response-div" class="response-div">
+        <p id="guess-response" class="guess-response">Guess Response: </p>    
+      </div>
+      <button id="play-again" class="play-again button">Play Again</button>
+        <button id="exit-btn" class="exit-btn button">Exit</button>  
     </div>
 <script src="js/app.js"></script>
 </body>

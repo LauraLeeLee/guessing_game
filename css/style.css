@@ -29,12 +29,14 @@ h1 {
 }
 .choose-game, 
 .normal-game,
-#input-div23 {
+#input-div3,
+#play-again,
+.response-div{
 	display: none;
 }
 
-
 .button {
+	display: inline-block;
 	width: 100px;
 	height: 60px;
 	margin-top: 20px;
