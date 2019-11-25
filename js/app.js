@@ -74,12 +74,15 @@ function normalGame() {
 		getMaxRangeInput();
 		// minMaxRange(minValue, maxValue);
 
+if((minValue == '') || (maxValue == '')) {
+	alert('Please enter min and max values');
+}	else {
 		document.getElementById('gen-random').addEventListener('click', function(){
-			document.getElementById('min-max-div').style.display = 'none';
-			document.getElementById('input-div3').style.display = 'block';
-			document.getElementById('gen-random').style.display = 'none';
-			generateRandomNum(minValue, maxValue);
-			console.log('random: ', randomNum);
+		document.getElementById('min-max-div').style.display = 'none';
+		document.getElementById('input-div3').style.display = 'block';
+		document.getElementById('gen-random').style.display = 'none';
+		generateRandomNum(minValue, maxValue);
+		console.log('random: ', randomNum);
 		}); 
 	
 		userGuess.addEventListener('input', function() {	
@@ -94,7 +97,6 @@ function normalGame() {
 			if(guessValue < randomNum) {
 				guessResponse.innerHTML = 'Guess higher';
 				numbersGuessed.push(guessValue);
-			
 			}
 			if(guessValue === randomNum) {
 				numbersGuessed.push(guessValue);
@@ -107,24 +109,11 @@ function normalGame() {
 
 						//TODO: make this know which game was played when playAgain
 		//was chosen to start the appropriate game
-			if(playAgain) {
-				playAgain.addEventListener('click', playGameAgain());
-				// 	document.getElementById('min-max-div').style.display = 'block';
-				// 	document.getElementById('input-div3').style.display = 'none';
-				// 	document.getElementById('gen-random').style.display = 'inline-block';
-				// 	minRangeInput.value = '';
-				// 	maxRangeInput.value = '';
-				// 	userGuess.value = '';
-				// 	guessResponse.innerHTML = '';
-				// 	numbersGuessed = [];
-				// 	randomNum = '';
-				// 	guessResponseDiv.style.display = 'none';
-				// 	playAgain.style.display = 'none';
-				// 	exitBtn.style.display = 'none';
-				// });
-			}
+		if(playAgain) {
+			playAgain.addEventListener('click', playGameAgain);
+		}      
+    
 		}
-
 			if(guessValue && minValue && maxValue) {
 				if((guessValue < minValue) || (guessValue > maxValue)) {
 					guessResponse.innerHTML = "please make guess beteween " + 
@@ -132,6 +121,7 @@ function normalGame() {
 				} 
 			}
 		}); //end of userGuess event
+	}//end of else 
 }//end of normalGame
 
  document.getElementById('submit-input').addEventListener('click', function() {
@@ -152,8 +142,8 @@ function normalGame() {
 		}
 
 		if(normalGameBtn) {   
-			normalGameBtn.addEventListener('click', normalGame());
-    }       
-    
+			normalGameBtn.addEventListener('click', normalGame);
+		} 
+	
 });
  
