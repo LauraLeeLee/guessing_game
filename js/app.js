@@ -37,6 +37,7 @@ function getMinRangeInput(){
 function getMaxRangeInput() {
 	maxRangeInput.addEventListener('input', function() {
 		maxValue = parseInt(maxRangeInput.value);
+		minMaxRange(minValue, maxValue);
 		console.log(maxRangeInput.value);
 	});
 }
@@ -45,6 +46,7 @@ function minMaxRange(min, max) {
 	if(min && max) {
 		if((max - min) < 10) {
 			console.log('max- min <10');
+			maxRangeInput.value = '';
 			alert("Min and Max need to have a range of at least 10");
 		}
 	}
@@ -72,20 +74,25 @@ function normalGame() {
 
 		getMinRangeInput();
 		getMaxRangeInput();
-		// minMaxRange(minValue, maxValue);
 
-if((minValue == '') || (maxValue == '')) {
-	alert('Please enter min and max values');
-}	else {
+
 		document.getElementById('gen-random').addEventListener('click', function(){
+			console.log('minVal ' + minValue + ' maxVal ' + maxValue);
+			if(!minValue || !maxValue) {
+				alert('Please enter min and max values');
+			}	else {
+		minMaxRange(minValue, maxValue);
+		
 		document.getElementById('min-max-div').style.display = 'none';
 		document.getElementById('input-div3').style.display = 'block';
 		document.getElementById('gen-random').style.display = 'none';
 		generateRandomNum(minValue, maxValue);
 		console.log('random: ', randomNum);
+		}//end of else 
 		}); 
 	
 		userGuess.addEventListener('input', function() {	
+		
 			guessResponseDiv.style.display = 'block';		 
 			guessValue = parseInt(userGuess.value);
 			console.log(typeof(minValue), minValue, typeof(maxValue), maxValue, typeof(guessValue), guessValue);
@@ -120,8 +127,8 @@ if((minValue == '') || (maxValue == '')) {
 									minValue + " and " + maxValue;
 				} 
 			}
+	
 		}); //end of userGuess event
-	}//end of else 
 }//end of normalGame
 
  document.getElementById('submit-input').addEventListener('click', function() {
