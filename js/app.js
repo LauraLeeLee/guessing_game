@@ -24,6 +24,10 @@ let minMaxInputs = '<div id="min-max-div" class="min-max-div">' +
 let minMaxDiv;
 let minRangeInput;
 let maxRangeInput;
+let yesBtn = '<button id="yes-btn" class="yes-btn button">Yes</button>';
+let noHighBtn = '<button id="no-btn-high" class="no-btn-high button">No too high</button>';
+let noLowBtn = '<button id="no-btn-low" class="no-btn-low button">No too low</button>';
+
 function getInputElements() {
 	if(minMaxInputs) { 
 		minMaxDiv = document.getElementById('min-max-div');
@@ -45,22 +49,82 @@ let guessResponse = document.getElementById('guess-response');
 let guessResponse2 = document.getElementById('guess-response2');
 let guessResponse3 = document.getElementById('guess-response3');
 let randomNum;
+let oldRandom;
+
 let guessCommand = document.getElementById('guess-command');
+let reverseInstruction;
 
 let numbersGuessed = [];
 let maxNumGuesses = 2;
 
 let beginGuess = document.getElementById('gen-random');
 let timeout = null;
-let reverseStartBtn = document.getElementById('reverse-begin');
-
 
 function generateRandomNum(min, max) {
 	randomNum = Math.floor(Math.random() * (max - min + 1) + min);
+	if(numbersGuessed.includes(randomNum) === false) {
+		oldRandom = randomNum;
+	} else {
+		Math.floor(Math.random() * (max - min + 1) + min);
+	}
+	
+}
+
+function computerGuessAgainHigher() {
+	 //
+	minValue = oldRandom + 1;
+	console.log("oldRandom", oldRandom, "minValue", minValue, "maxValue", maxValue);
+	generateRandomNum(minValue, maxValue);
+	console.log(randomNum, "in guessHigher");
+	if(randomNum === oldRandom) {
+	}
+	if(numbersGuessed.includes(randomNum) === false){
+		numbersGuessed.push(randomNum);
+		guessResponse2.textContent = "Is your number " + randomNum + " ?";
+	} else{
+		generateRandomNum(minValue, maxValue);	
+		console.log("number already guessed- in guessHigher");
+		console.log("random in computerGuess", randomNum);
+	}
+	checkGuessInRange(minValue, maxValue);
+	console.log("randomNum", randomNum);
+	console.log("numbersGuessed(too low): ", numbersGuessed.join(", "));
+}
+
+
+function computerGuessAgainLower() {
+	maxValue = oldRandom - 1;
+	console.log("oldRandom:", oldRandom, "minValue:", minValue, "maxValue:", maxValue);
+	generateRandomNum(minValue, maxValue);
+	console.log(randomNum, "in guessLower");
+	if(randomNum === oldRandom) {
+	}
+	if(numbersGuessed.includes(randomNum) === false){
+		numbersGuessed.push(randomNum);
+		guessResponse2.textContent = "Is your number " + randomNum + " ?";
+	} else {
+		generateRandomNum(minValue, maxValue);
+		console.log("number already guessed- in guessLower");
+		console.log("random in computerGuess", randomNum);
+	}
+	checkGuessInRange(minValue, maxValue);
+console.log("randomNum: ", randomNum);
+console.log("numbersGuessed(too high): ", numbersGuessed.join(", "));	
+}
+
+function checkGuessInRange(min, max) {
+	let guessArray = "The numbers I guessed are: " + numbersGuessed.join(', ');
+	if(min === max) {
+		guessResponse.textContent = "Excuse me, this isn't possible, we've made an error somewhere";
+		guessResponse2.textContent = guessArray;
+	}
+	if(min - max === 1) {
+		guessResponse.textContent = "Hello?? Are you cheating? The minValue is " + minValue + " and the maxValue is " + maxValue;
+		guessResponse2.textContent = guessArray;
+	}
 }
 
 // setTimeout allows delay for user to be done typing before extracting value of input
-
 	function getMinRangeInput(){
 		if(minRangeInput){
 			minRangeInput.onkeyup = function(e) {
@@ -108,7 +172,7 @@ function playGameAgain() {
 	minRangeInput.value = '';
 	maxRangeInput.value = '';
 	userGuess.value = '';
-	guessResponse.innerHTML = '';
+	guessResponse.textContent = '';
 	numbersGuessed = [];
 	randomNum = '';
 	endTitle.innerHTML = ''; 
@@ -137,7 +201,7 @@ function normalGame() {
 	chooseGameDiv.style.display = 'none';
 	// minMaxDiv.style.display = 'block';
 	buttonsDiv.style.display = 'block';
-	reverseStartBtn.style.display = 'none';
+	// reverseStartBtn.style.display = 'none';
 	getMinRangeInput();
 	getMaxRangeInput();
 
@@ -172,18 +236,16 @@ console.log("userGuess: ", userGuess);
 			timeout = setTimeout(function() { 	
 			guessResponseDiv.style.display = 'block';		 
 			guessValue = parseInt(userGuess.value);
+			numbersGuessed.push(guessValue);
 			console.log(typeof(minValue), minValue, typeof(maxValue), maxValue, typeof(guessValue), guessValue);
 		
 			if(guessValue > randomNum) {
-				guessResponse.innerHTML = 'Guess lower';
-				numbersGuessed.push(guessValue);
+				guessResponse.textContent = 'Guess lower';
 			}
 			if(guessValue < randomNum) {
 				guessResponse.innerHTML = 'Guess higher';
-				numbersGuessed.push(guessValue);
 			}
 			if(guessValue === randomNum) {
-				numbersGuessed.push(guessValue);
 				// guessResponseDiv.style.display = 'block';
 				endTitle.innerHTML = 'YOU WON! ';
 				guessResponse.innerHTML = 'The number was ' + randomNum;
@@ -229,26 +291,107 @@ function reverseGame() {
 	console.log('reverse game clicked');
   reverseGameDiv.style.display = 'block';
 	chooseGameDiv.style.display = 'none';
-	minMaxDiv.style.display = 'block';
 	buttonsDiv.style.display = 'block';
+
+	let checkForDiv = document.getElementById('min-max-div');
+	if(!checkForDiv) {
+	reverseMinMaxDiv.insertAdjacentHTML("beforeEnd", minMaxInputs);
+	}
+	getInputElements();
 	getMinRangeInput();
 	getMaxRangeInput();
-	gameRuleTitle.innerHTML += maxNumGuesses + ' tries';
-	
+
+	console.log("max guesses :", maxNumGuesses);
+	if(!gameRuleTitle.textContent.includes(maxNumGuesses)) {
+		gameRuleTitle.textContent += maxNumGuesses;
+	 }	
+	 
+	 beginGuess.addEventListener('click', function() {
+		console.log("begin button clicked in reverse game");
+		startComputerGuess();
+		//===make sure nothing in startComputerGuess is needed in beginGuess
+	 });//end beginGuess	
+	 
 	nextBtn.addEventListener('click', function() {
-		console.log('Next btn clicked');
-		guessCommand.innerHTML = 'Great! Thank you! Now, think of a number between ' + 
-															minValue + ' and ' + maxValue;
-	});
+		buttonsDiv.insertAdjacentHTML("afterBegin", noLowBtn);
+		buttonsDiv.insertAdjacentHTML("afterBegin", noHighBtn);
+		buttonsDiv.insertAdjacentHTML("afterBegin", yesBtn);
+		nextBtn.style.display = 'none';
 
+		let checkInstruction = document.getElementById('reverse-instruction');
+		let haveNumber = document.getElementById('have-number');
+		if(checkInstruction) {
+			checkInstruction.style.display = 'none';
+			haveNumber.style.display = 'none';
+		}
+		generateRandomNum(minValue, maxValue);
+		
+		console.log('reverse random:', randomNum);
+		if(randomNum) {
+			numbersGuessed.push(randomNum);
+			guessResponseDiv.style.display = 'block';
+			guessResponse.textContent = "Is " + randomNum + " your number?";
+			
+				document.addEventListener('click', function(e){
+					if(e.target && e.target.id == 'yes-btn') {
+						yesBtnResponse();
+					}
+				});
 
-	reverseStartBtn.addEventListener('click', function() {
-		console.log('Reverse guessing started');
-	});
+				document.addEventListener('click', function(e){
+					if(e.target && e.target.id == 'no-btn-high') {
+						noHighResponse();
+					}
+				});
+				document.addEventListener('click', function(e){
+					if(e.target && e.target.id == 'no-btn-low') {
+						noLowResponse();
+					}
+				});
+	  }//end if randomNum
+	});//end nextBtn
 }//end reverse game
 
-function startComputerGuess() {
+function yesBtnResponse() {
+	console.log("yes button clicked");
+	let computerWins = 'YES!! I WON!!! I guessed in ' + numbersGuessed.length +
+											"The numbers I guessed are: " + numbersGuessed.join(', ');
+	guessResponse2.textContent = computerWins;
+	guessResponse.style.display = "none";
+	document.getElementById('yes-btn').style.display = "none";
+	document.getElementById('no-btn-high').style.display = "none";
+	document.getElementById('no-btn-low').style.display = "none";
+	playAgain.style.display = "inline-block";
+}
 
+function noHighResponse() {
+	console.log("no-high button clicked");
+	guessResponse.textContent = "Ok, I need to guess lower.....";
+	computerGuessAgainLower();
+}
+
+function noLowResponse() {
+	console.log("no-low button clicked");
+	guessResponse.textContent = "Ok, I need to guess higher.....";	
+	computerGuessAgainHigher();
+}
+
+function startComputerGuess() {
+	console.log('minVal ' + minValue + ' maxVal ' + maxValue);
+	if(!minValue || !maxValue) {
+		alert('Please enter min and max values');
+	}	else {
+		minMaxRange(minValue, maxValue);
+	
+		document.getElementById('min-max-div').style.display = 'none';
+		document.getElementById('gen-random').style.display = 'none';
+
+		reverseInstruction = '<h2 id="reverse-instruction" class="reverse-instructions">Great! Now think of a number between ' + minValue + ' and ' + maxValue + '</h2>' +
+													'<h3 id="have-number" class="have-number">When you have your number, click next';
+
+		reverseGameDiv.insertAdjacentHTML("beforeEnd", reverseInstruction);
+		nextBtn.style.display = 'inline-block';
+	}	
 }
 
 //Runs when user enters name
